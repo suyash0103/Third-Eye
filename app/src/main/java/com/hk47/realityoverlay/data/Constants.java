@@ -32,7 +32,7 @@ public class Constants {
     public static final int LOCATION_UPDATE_DISPLACEMENT = 10; // meters
 
     // Places
-    public static final String PLACES_API_KEY = "&key=" + BuildConfig.API_KEY;
+    public static final String PLACES_API_KEY = "&key=" + "AIzaSyDrcQBm9tTk8UmV_zQ84voeq91-X9RBzrY";
     public static final String BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     public static final String USER_LOCATION = "location=";
     public static final String RANK_BY_DISTANCE = "&rankby=distance";
