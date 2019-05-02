@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,8 +45,11 @@ import com.hk47.realityoverlay.utils.PlacesUtilities;
 import com.hk47.realityoverlay.utils.SensorUtilities;
 import com.hk47.realityoverlay.utils.VolleySingleton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.hk47.realityoverlay.data.Constants.LOCATION_UPDATE_DISPLACEMENT;
@@ -294,6 +298,106 @@ public class OverlayActivity extends AppCompatActivity implements
                     @Override
                     public void onResponse(JSONObject response) {
 
+                        try {
+                            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences_types_key), MODE_PRIVATE);;
+                            boolean cafesAreActivated = sharedPreferences.getBoolean(
+                                    OverlayActivity.this.getString(R.string.preferences_type_cafe), true);
+                            if (cafesAreActivated) {
+                                JSONArray results = response.getJSONArray("results");
+                                JSONObject obj1 = results.getJSONObject(0);
+                                JSONObject geometry = obj1.getJSONObject("geometry");
+                                JSONObject location = geometry.getJSONObject("location");
+                                String[] type = new String[4];
+//                                obj1 = results.getJSONObject(2);
+//                                geometry = obj1.getJSONObject("geometry");
+                                location.put("lat", 13.006807);
+                                location.put("lng", 74.796521);
+                                obj1.put("name", "3rd Block NC");
+                                obj1.put("place_id", "ChIJL98eQBpSozsRRRwWtAtndyM");
+//                            String[] type = new String[4];
+                                type[0] = "restaurant";
+                                type[1] = "point_of_interest";
+                                type[2] = "food";
+                                type[3] = "establishment";
+                                obj1.put("type", type);
+
+                                obj1 = results.getJSONObject(1);
+                                geometry = obj1.getJSONObject("geometry");
+                                location = geometry.getJSONObject("location");
+                                location.put("lat", 13.007914);
+                                location.put("lng", 74.796272);
+                                obj1.put("name", "7th Block NC");
+                                obj1.put("place_id", "ChIJL_n5nhBSozsRMUFhnjwNtjg");
+//                            String[] type = new String[4];
+                                type[0] = "restaurant";
+                                type[1] = "point_of_interest";
+                                type[2] = "food";
+                                type[3] = "establishment";
+                                obj1.put("type", type);
+
+                                obj1 = results.getJSONObject(2);
+                                geometry = obj1.getJSONObject("geometry");
+                                location = geometry.getJSONObject("location");
+                                location.put("lat", 13.013729);
+                                location.put("lng", 74.796305);
+                                obj1.put("name", "Girls Block NC");
+                                obj1.put("place_id", "ChIJD2rlYRFSozsRLX3e7UtezGI");
+//                            String[] type = new String[4];
+                                type[0] = "restaurant";
+                                type[1] = "point_of_interest";
+                                type[2] = "food";
+                                type[3] = "establishment";
+                                obj1.put("type", type);
+                            }
+                            boolean transitIsActivated = sharedPreferences.getBoolean(
+                                    OverlayActivity.this.getString(R.string.preferences_type_transit), false);
+                            if (transitIsActivated) {
+                                JSONArray results = response.getJSONArray("results");
+                                JSONObject obj1 = results.getJSONObject(0);
+                                JSONObject geometry = obj1.getJSONObject("geometry");
+                                JSONObject location = geometry.getJSONObject("location");
+                                location.put("lat", 13.0064237);
+                                location.put("lng", 74.7944927);
+                                obj1.put("name", "MT-3 Bus Stop");
+                                obj1.put("place_id", "ChIJU1dqjRpSozsRBJXLV4Ss9ww");
+                                String[] type = new String[4];
+                                type[0] = "bus_station";
+                                type[1] = "transit_station";
+                                type[2] = "point_of_interest";
+                                type[3] = "establishment";
+                                obj1.put("type", type);
+
+                                obj1 = results.getJSONObject(1);
+                                geometry = obj1.getJSONObject("geometry");
+                                location = geometry.getJSONObject("location");
+                                location.put("lat", 13.010728);
+                                location.put("lng", 74.792433);
+                                obj1.put("name", "LHC-C Bus stop");
+                                obj1.put("place_id", "ChIJ7XrVKhBSozsR6WZncNE-PEA");
+//                            String[] type = new String[4];
+                                type[0] = "bus_station";
+                                type[1] = "transit_station";
+                                type[2] = "point_of_interest";
+                                type[3] = "establishment";
+                                obj1.put("type", type);
+
+                            }
+                            //                            type[4] = "bus_station";
+
+
+
+//                            type = ["bus_station","transit_station","point_of_interest","establishment"];
+//                            obj1.put("type", type);
+                            Log.v("RESPONSES", response.toString());
+//                            int len = results.length();
+//
+//                            String resp = "{\"geometry\":{\"location\":{\"lat\":13.0064237,\"lng\" : 74.7944927},\"viewport\":{\"northeast\":{\"lat\":12.9820206802915,\"lng\":74.80794058029151},\"southwest\":{\"lat\":12.9793227197085,\"lng\":74.80524261970851}}},\"icon\":\"https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png\",\"id\":\"9949673ad65d8b1e66be2387c929416ee313f82b\",\"name\":\"MT3 Bus Stop\",\"opening_hours\":{\"open_now\":true},\"photos\":[{\"height\":2448,\"html_attributions\":[\"\\u003ca href=\\\"https://maps.google.com/maps/contrib/101999008965873948763/photos\\\"\\u003eSudarshan bhat\\u003c/a\\u003e\"],\"photo_reference\":\"CmRZAAAABp2HcOh28zNm9yfGV4ym-kIhaJAj3u7QdnVxeg4h6cf3vgPnHX5fQDUNaVsEtXJA0fBNQxQeLs7RjS6YI2WG_NO5z_ztCJXzq_Dj9_1B716npbw9dHFPUmxps4x8xVqtEhBDjCeonrad4z05BVyKXE3FGhSWaE4dc_KTbxGM1a-9FWJh7KG0vg\",\"width\":3264}],\"place_id\":\"ChIJU1dqjRpSozsRBJXLV4Ss9ww\",\"plus_code\":{\"compound_code\":\"XRJ4+7J Surathkal, Mangaluru, Karnataka, India\",\"global_code\":\"7J4PXRJ4+7J\"},\"price_level\":1,\"rating\":4,\"reference\":\"ChIJU1dqjRpSozsRBJXLV4Ss9ww\",\"scope\":\"GOOGLE\",\"types\":[\"bus_station\",\"transit_station\",\"point_of_interest\",\"establishment\"],\"user_ratings_total\":15,\"vicinity\":\"Kadambody Road, Hosabettu, Surathkal\"}";
+//                            JSONObject json = new JSONObject(resp);
+//                            Log.v("JSON", json.toString());
+//                            results.put(len, )
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         ArrayList<NearbyPlace> nearbyPlaces =
                                 PlacesUtilities.processPlacesJson(
                                         getApplicationContext(),
@@ -303,6 +407,9 @@ public class OverlayActivity extends AppCompatActivity implements
 
                         // Update the OverlayDisplayView when the user's location changes
                         mOverlayDisplayView.setNearbyPlaces(nearbyPlaces);
+
+
+
                     }
                 },
                 new Response.ErrorListener() {

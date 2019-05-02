@@ -1,6 +1,7 @@
 package com.hk47.realityoverlay.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.hk47.realityoverlay.R;
 import com.hk47.realityoverlay.data.Constants;
@@ -36,6 +37,28 @@ public class PlaceDetailsUtilities {
 
             String place_id = result.getString("place_id");
             placeDetails.setPlace_id(place_id);
+
+            if(place_id.equals("ChIJL98eQBpSozsRRRwWtAtndyM"))
+            {
+                placeDetails.setName("3rd Block NC");
+            }
+            else if(place_id.equals("ChIJL_n5nhBSozsRMUFhnjwNtjg"))
+            {
+                placeDetails.setName("7th Block NC");
+            }
+            else if(place_id.equals("ChIJD2rlYRFSozsRLX3e7UtezGI"))
+            {
+                placeDetails.setName("Girls Block NC");
+            }
+            else if(place_id.equals("ChIJU1dqjRpSozsRBJXLV4Ss9ww"))
+            {
+                placeDetails.setName("MT-3 Bus Stop");
+            }
+            else if(place_id.equals("ChIJ7XrVKhBSozsR6WZncNE-PEA"))
+            {
+                placeDetails.setName("LHC-C Bus Stop");
+            }
+            Log.i("Place_Detail_Response", response.toString());
 
             double rating = result.getDouble("rating");
             placeDetails.setRating(rating);

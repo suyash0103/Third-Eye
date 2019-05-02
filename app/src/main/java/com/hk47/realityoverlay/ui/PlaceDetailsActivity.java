@@ -13,6 +13,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -37,6 +38,7 @@ import com.hk47.realityoverlay.data.PlaceDetails;
 import com.hk47.realityoverlay.utils.PlaceDetailsUtilities;
 import com.hk47.realityoverlay.utils.VolleySingleton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -117,8 +119,12 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
+
+
                         PlaceDetails placeDetails = PlaceDetailsUtilities.processDetailsJson(response);
                         placeDetails.setIcon_id(icon_id);
+
+                        Log.v("DETAILS", response.toString());
 
                         // Set header
                         String restaurantName = placeDetails.getName();
@@ -198,6 +204,18 @@ public class PlaceDetailsActivity extends AppCompatActivity {
                                                 customerReviews));
                             }
                         }
+
+                        if(place_id == "ChIJL_n5nhBSozsRMUFhnjwNtjg")
+                        {
+                            try {
+                                JSONObject result = response.getJSONObject("result");
+                                result.put("name", "7th Block NC");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
                         showDetailsContainer();
                     }
                 },
